@@ -1,0 +1,6 @@
+matplotlib>=3.8
+numpy>=1.26
+rich>=13.7
+scipy>=1.11
+sounddevice>=0.4
+watchdog>=4.0

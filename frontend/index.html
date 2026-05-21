@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SonicShadow Lab Console</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="header">
+        <div>
+          <p class="eyebrow">Operating Systems Lab</p>
+          <h1>SonicShadow</h1>
+        </div>
+        <div class="status-pill" id="audioStatus">Audio idle</div>
+      </section>
+
+      <section class="workspace">
+        <aside class="panel controls">
+          <label>
+            Profile
+            <select id="profile">
+              <option value="reliable_slow">Reliable slow: 10/12 kHz</option>
+              <option value="reliable">Reliable fast: 10/12 kHz</option>
+              <option value="near_ultra">Near ultrasonic: 17/18 kHz</option>
+              <option value="proposal">Proposal: 18/19 kHz</option>
+              <option value="custom">Custom</option>
+            </select>
+          </label>
+
+          <div class="grid-2">
+            <label>0 Hz<input id="freqZero" type="number" /></label>
+            <label>1 Hz<input id="freqOne" type="number" /></label>
+            <label>Sync Hz<input id="syncFreq" type="number" /></label>
+            <label>Tolerance<input id="tolerance" type="number" /></label>
+            <label>Bit seconds<input id="bitDuration" type="number" min="0.04" step="0.01" /></label>
+            <label>Repeat<input id="repeatBits" type="number" min="1" step="2" /></label>
+          </div>
+
+          <div class="meter-set">
+            <div>
+              <span>Sync</span>
+              <meter id="syncMeter" min="0" max="1" value="0"></meter>
+            </div>
+            <div>
+              <span>0</span>
+              <meter id="zeroMeter" min="0" max="1" value="0"></meter>
+            </div>
+            <div>
+              <span>1</span>
+              <meter id="oneMeter" min="0" max="1" value="0"></meter>
+            </div>
+          </div>
+        </aside>
+
+        <section class="panel main-panel">
+          <div class="tabs" role="tablist">
+            <button class="tab active" data-tab="transmit">Transmit</button>
+            <button class="tab" data-tab="receive">Receive</button>
+            <button class="tab" data-tab="visualize">Spectrogram</button>
+          </div>
+
+          <section class="tab-pane active" id="transmit">
+            <label>
+              Message
+              <textarea id="message">HELLO FROM SONICSHADOW LAB DEMO</textarea>
+            </label>
+            <div class="row">
+              <label class="file-button">
+                Load text file
+                <input id="fileInput" type="file" accept=".txt,.md,.csv,.json" />
+              </label>
+              <button id="playBtn">Play Transmission</button>
+              <button id="stopToneBtn" class="secondary">Stop</button>
+            </div>
+            <div class="summary" id="txSummary"></div>
+          </section>
+
+          <section class="tab-pane" id="receive">
+            <div class="row">
+              <button id="listenBtn">Start Listening</button>
+              <button id="stopListenBtn" class="secondary">Stop</button>
+              <button id="clearBtn" class="secondary">Clear</button>
+            </div>
+            <div class="decode-grid">
+              <div class="readout">
+                <span>State</span>
+                <strong id="rxState">waiting</strong>
+              </div>
+              <div class="readout">
+                <span>Last symbol</span>
+                <strong id="lastSymbol">-</strong>
+              </div>
+              <div class="readout">
+                <span>Bits</span>
+                <strong id="bitCount">0</strong>
+              </div>
+            </div>
+            <label>
+              Decoded text
+              <textarea id="decoded" readonly></textarea>
+            </label>
+          </section>
+
+          <section class="tab-pane" id="visualize">
+            <canvas id="spectrogram" width="980" height="360"></canvas>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
