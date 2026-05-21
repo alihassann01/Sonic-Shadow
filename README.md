@@ -4,11 +4,78 @@ SonicShadow is a controlled Operating Systems lab demo that sends an explicit te
 
 Use this only with your own demo text and a consenting receiver in a lab setting. The watcher is intentionally limited to a file named `demo.txt`.
 
-## Setup
+## Linux Clone And Setup
+
+Linux is the recommended OS path for the lab demo. The Bash helpers prepare a
+Python virtual environment around the existing Python programs; they do not
+change the transmitter, receiver, protocol, or watcher behavior.
+
+On Debian or Ubuntu:
+
+```bash
+git clone https://github.com/alihassann01/Sonic-Shadow.git
+cd Sonic-Shadow
+bash scripts/linux/setup.sh
+bash scripts/linux/check.sh
+```
+
+`setup.sh` installs the Linux Python, Matplotlib GUI, and PortAudio packages
+needed by this project when `apt` is available, creates `.venv`, installs
+`requirements.txt`, and runs the receiver self-test without microphone access.
+On another Linux distribution, install equivalent Python 3, venv/pip, GUI, and
+PortAudio packages first, then run:
+
+```bash
+bash scripts/linux/setup.sh --skip-system-packages
+```
+
+Audio device ids vary between computers and Linux audio setups. List the
+devices after cloning before passing `--device` values:
+
+```bash
+bash scripts/linux/list_devices.sh
+```
+
+Start the first audible demo in two terminals:
+
+```bash
+bash scripts/linux/run_receiver.sh --audible
+```
+
+```bash
+bash scripts/linux/run_transmitter.sh --audible --message "HELLO OS LAB"
+```
+
+The same Bash launchers forward any existing Python arguments:
+
+```bash
+bash scripts/linux/run_watcher.sh --audible
+bash scripts/linux/run_spectrogram.sh --profile reliable_slow
+```
+
+## Manual Setup
+
+Create the virtual environment:
 
 ```bash
 python -m venv .venv
-.venv\Scripts\activate
+```
+
+Activate `.venv` before installing dependencies. On Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+On Windows PowerShell, the activation command is:
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Install the Python dependencies:
+
+```bash
 pip install -r requirements.txt
 ```
 
@@ -21,7 +88,8 @@ python receiver.py --list-devices
 
 ## Recommended Test Flow
 
-The validated profile on this laptop is available as a shortcut:
+The validated profile on the original development laptop is available as a
+shortcut. Re-check device ids after cloning on Linux:
 
 ```bash
 python receiver.py --device 1 --profile reliable_slow
